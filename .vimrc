@@ -43,6 +43,7 @@ hi IndentGuidesOdd ctermbg=white
 let g:ragtag_global_maps = 1
 
 hi CursorLine cterm=none ctermbg=235
+hi Search term=reverse ctermfg=88 ctermbg=214
 
 "Custom filetypes
 au BufNewFile,BufRead *.ctp set filetype=html
