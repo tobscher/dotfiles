@@ -1,8 +1,32 @@
-:source ~/.vim/support_functions.vim
+set nocompatible
+filetype off
 
-call pathogen#infect()
-syntax on
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+Bundle 'gmarik/vundle'
+Bundle 'Lokaltog/vim-powerline'
+Bundle 'scrooloose/nerdtree'
+Bundle 'tpope/vim-vividchalk'
+Bundle 'MarcWeber/vim-addon-mw-utils'
+Bundle 'vim-scripts/tlib'
+Bundle 'tpope/vim-fugitive'
+Bundle 'mileszs/ack.vim'
+Bundle 'kien/ctrlp.vim'
+Bundle 'tsaleh/vim-matchit'
+Bundle 'garbas/vim-snipmate'
+Bundle 'ervandew/supertab'
+Bundle 'scrooloose/syntastic'
+Bundle 'tpope/vim-commentary'
+Bundle 'tpope/vim-endwise'
+Bundle 'tpope/vim-surround'
+Bundle 'tpope/vim-markdown'
+Bundle 'timcharper/textile.vim'
+
+":source ~/.vim/support_functions.vim
+
 filetype plugin indent on
+syntax on
 set hlsearch              "Highlight searches
 set incsearch             "Incremental search
 set ls=2                  "Always show status line in all windows
@@ -22,12 +46,15 @@ set hidden                "Don't close buffers when changing files
 set wildchar=<Tab>        "Tab expands wildcards
 set fileencoding=utf8     "Unicode man
 set encoding=utf-8
-set nocompatible          "Get all of vim's awesomeness
 set backspace=indent,eol,start "Allow backspacing over tabs end of lines and start of insert
 set wildmode=longest,list "Better tab completion of filenames (like bash)
 set wildmenu              "as above
 set mouse=a
 set lazyredraw            " no buffer refresh while running macros
+set nofoldenable
+set foldlevelstart=99
+set foldmethod=manual
+
 "Allows use of %/ for current directory
 cmap %/ %:p:h/
 
@@ -51,16 +78,28 @@ au BufNewFile,BufRead *.ui set filetype=ruby
 au BufNewFile,BufRead Gemfile set filetype=ruby
 au BufNewFile,BufRead Rakefile set filetype=ruby
 au BufNewFile,BufRead Fudgefile set filetype=ruby
+au BufNewFile,BufRead Guardfile set filetype=ruby
+au BufNewFile,BufRead config.ru set filetype=ruby
+au BufNewFile,BufRead .bash_aliases set filetype=sh
 "Tabs and traling space highlighting and sorting out - :retab sorts out tabs
 set list lcs=tab:·⁖,trail:¶
 
-" Launch NerdTree
-autocmd VimEnter * NERDTree
-
 let mapleader = ","
 map <leader>, :CtrlP<CR>
+map <leader>l :NERDTreeToggle<CR>
 
-set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*.swp,*/tmp/*
+set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*.swp,*/tmp/*,*.so,*.zip
 
 set backupdir=/tmp
 set directory=/tmp
+
+let g:Powerline_symbols = 'fancy'
+
+command! -nargs=0 -bar Qargs execute 'args' QuickfixFilenames()
+function! QuickfixFilenames()
+  let buffer_numbers = {}
+  for quickfix_item in getqflist()
+    let buffer_numbers[quickfix_item['bufnr']] = bufname(quickfix_item['bufnr'])
+  endfor
+  return join(map(values(buffer_numbers), 'fnameescape(v:val)'))
+endfunction
