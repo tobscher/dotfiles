@@ -1,29 +1,30 @@
 set nocompatible
 filetype off
 
-set rtp+=~/.vim/bundle/vundle/
+set rtp+=~/.vim/bundle/Vundle.vim/
 call vundle#rc()
 
-Bundle 'gmarik/vundle'
-Bundle 'Lokaltog/vim-powerline'
-Bundle 'scrooloose/nerdtree'
-Bundle 'tpope/vim-vividchalk'
-Bundle 'MarcWeber/vim-addon-mw-utils'
-Bundle 'vim-scripts/tlib'
-Bundle 'tpope/vim-fugitive'
-Bundle 'mileszs/ack.vim'
-Bundle 'kien/ctrlp.vim'
-Bundle 'tsaleh/vim-matchit'
-Bundle 'garbas/vim-snipmate'
-Bundle 'ervandew/supertab'
-Bundle 'scrooloose/syntastic'
-Bundle 'tpope/vim-commentary'
-Bundle 'tpope/vim-endwise'
-Bundle 'tpope/vim-surround'
-Bundle 'tpope/vim-markdown'
-Bundle 'timcharper/textile.vim'
-
-":source ~/.vim/support_functions.vim
+Plugin 'gmarik/vundle'
+Plugin 'Lokaltog/vim-powerline'
+Plugin 'scrooloose/nerdtree'
+Plugin 'tpope/vim-vividchalk'
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'vim-scripts/tlib'
+Plugin 'tpope/vim-fugitive'
+Plugin 'kien/ctrlp.vim'
+Plugin 'scrooloose/syntastic'
+Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-endwise'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-markdown'
+Plugin 'timcharper/textile.vim'
+Plugin 'evanmiller/nginx-vim-syntax'
+Plugin 'elzr/vim-json'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'fatih/vim-go'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
 
 filetype plugin indent on
 syntax on
@@ -51,9 +52,6 @@ set wildmode=longest,list "Better tab completion of filenames (like bash)
 set wildmenu              "as above
 set mouse=a
 set lazyredraw            " no buffer refresh while running macros
-set nofoldenable
-set foldlevelstart=99
-set foldmethod=manual
 
 "Allows use of %/ for current directory
 cmap %/ %:p:h/
@@ -72,6 +70,19 @@ let g:ragtag_global_maps = 1
 hi CursorLine cterm=none ctermbg=235
 hi Search term=reverse ctermfg=88 ctermbg=214
 
+" Configure the silver searcher
+let g:ackprg = 'ag --nogroup --nocolor --column'
+
+" Custom you complete me options
+" let g:ycm_key_list_select_completion = ['<TAB>', '<Down>', '<Enter>']
+let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+let g:ycm_key_list_select_completion=['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion=['<C-p>', '<Up>']
+
+let g:UltiSnipsExpandTrigger="<Tab>"
+let g:UltiSnipsJumpForwardTrigger="<Tab>"
+let g:UltiSnipsJumpBackwardTrigger="<S-Tab>"
+
 "Custom filetypes
 au BufNewFile,BufRead *.ctp set filetype=html
 au BufNewFile,BufRead *.ui set filetype=ruby
@@ -81,8 +92,11 @@ au BufNewFile,BufRead Fudgefile set filetype=ruby
 au BufNewFile,BufRead Guardfile set filetype=ruby
 au BufNewFile,BufRead config.ru set filetype=ruby
 au BufNewFile,BufRead .bash_aliases set filetype=sh
+au BufNewFile,BufRead *.vb set filetype=vbnet
 "Tabs and traling space highlighting and sorting out - :retab sorts out tabs
 set list lcs=tab:·⁖,trail:¶
+let g:go_fmt_command = "goimports"
+let g:go_fmt_fail_silently = 1
 
 let mapleader = ","
 map <leader>, :CtrlP<CR>
@@ -94,12 +108,3 @@ set backupdir=/tmp
 set directory=/tmp
 
 let g:Powerline_symbols = 'fancy'
-
-command! -nargs=0 -bar Qargs execute 'args' QuickfixFilenames()
-function! QuickfixFilenames()
-  let buffer_numbers = {}
-  for quickfix_item in getqflist()
-    let buffer_numbers[quickfix_item['bufnr']] = bufname(quickfix_item['bufnr'])
-  endfor
-  return join(map(values(buffer_numbers), 'fnameescape(v:val)'))
-endfunction
