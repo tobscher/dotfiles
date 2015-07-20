@@ -1,0 +1,4 @@
+.git/
+tmp/
+.sass-cache/
+coverage/
