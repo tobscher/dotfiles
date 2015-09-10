@@ -147,3 +147,6 @@ augroup myhfiles
   au BufEnter *.cpp let b:fswitchdst = 'h,hpp'
   au BufEnter *.cpp let b:fswitchlocs = 'reg:|\(src.*\)/\(src\)|\1/include|'
 augroup END
+
+" Syntastic config
+let g:syntastic_javascript_checkers = ['jshint']
