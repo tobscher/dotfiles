@@ -2,10 +2,11 @@ set nocompatible
 filetype off
 
 set rtp+=~/.vim/bundle/Vundle.vim/
-call vundle#rc()
+call vundle#begin()
 
 Plugin 'gmarik/vundle'
-Plugin 'Lokaltog/vim-powerline'
+
+Plugin 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
 Plugin 'scrooloose/nerdtree'
 Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'vim-scripts/tlib'
@@ -31,6 +32,8 @@ Plugin 'tmhedberg/matchit'
 Plugin 'ekalinin/Dockerfile.vim'
 Plugin 'rking/ag.vim'
 Plugin 'derekwyatt/vim-fswitch'
+
+call vundle#end()
 
 filetype plugin indent on
 syntax on
