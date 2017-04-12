@@ -1,2 +1,4 @@
 .*.sw*
 .ruby-version
+.DS_Store
+.idea/
